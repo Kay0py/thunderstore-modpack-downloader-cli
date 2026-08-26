@@ -3,8 +3,8 @@ A bash script that downloads and assembles a thunderstore modpack.
 
 Usage example:
 ```bash
-./<name>.sh -y -z https://thunderstore.io/package/Author/Modpack/
-./<name>.sh <r2modman-profile-code>
+./modman.sh -y -z https://thunderstore.io/package/Author/Modpack/
+./modman.sh <r2modman-profile-code>
 ```
 To see all flags use -h
 
