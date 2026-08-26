@@ -539,10 +539,27 @@ echo "Assembling build..."
 mkdir -p "$BUILD_DIR"
 cp -r "$STAGING_DIR/"* "$BUILD_DIR/"
 
-if [ "$RUN_MODE" = "profile" ] && [ -d "$WORK_DIR/profile_manifest/config" ]; then
-    echo "Applying profile configs..."
-    mkdir -p "$BUILD_DIR/BepInEx/config"
-    cp -rf "$WORK_DIR/profile_manifest/config/"* "$BUILD_DIR/BepInEx/config/"
+# Profile mode: overlay custom configs from the exported profile.
+# The profile_manifest may contain a BepInEx/ tree with per-profile
+# plugin configs and overrides that must take precedence over defaults.
+if [ "$RUN_MODE" = "profile" ]; then
+    if [ -d "$WORK_DIR/profile_manifest/BepInEx" ]; then
+        echo "Applying profile BepInEx overrides..."
+        mkdir -p "$BUILD_DIR/BepInEx"
+        (
+            shopt -s dotglob
+            cp -rf "$WORK_DIR/profile_manifest/BepInEx/"* "$BUILD_DIR/BepInEx/"
+        )
+    fi
+
+    if [ -d "$WORK_DIR/profile_manifest/config" ]; then
+        echo "Applying profile configs..."
+        mkdir -p "$BUILD_DIR/BepInEx/config"
+        (
+            shopt -s dotglob
+            cp -rf "$WORK_DIR/profile_manifest/config/"* "$BUILD_DIR/BepInEx/config/"
+        )
+    fi
 fi
 
 if [ "$MAKE_ZIP" = true ]; then
