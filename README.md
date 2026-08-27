@@ -1,5 +1,5 @@
 # thunderstore-modpack-downloader-cli
-A bash script that downloads and assembles a thunderstore modpack.
+A bash script that downloads and assembles a thunderstore modpacks.
 
 Usage example:
 ```bash
